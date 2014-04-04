@@ -6,12 +6,12 @@ namespace TheNewStringCalculator.Tests
     [TestFixture]
     public class CalculatorTests
     {
-        private Calculator evaluator;
+        private Calculator calculator;
 
         [SetUp]
         public void Setup()
         {
-            evaluator = new Calculator();
+            calculator = new Calculator();
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace TheNewStringCalculator.Tests
         {
             var input = "1";
 
-            var result = evaluator.Calculate(input);
+            var result = calculator.Calculate(input);
 
             Assert.That(result, Is.EqualTo(1));
         }
@@ -29,7 +29,7 @@ namespace TheNewStringCalculator.Tests
         {
             var input = "-1";
 
-            var result = evaluator.Calculate(input);
+            var result = calculator.Calculate(input);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -44,7 +44,7 @@ namespace TheNewStringCalculator.Tests
         [TestCase("(3+(5-2))*2", 12)]
         public void TestRecursiveCase(String expression, Double expected)
         {
-            var result = evaluator.Calculate(expression);
+            var result = calculator.Calculate(expression);
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -54,7 +54,7 @@ namespace TheNewStringCalculator.Tests
         [TestCase("3--1", 4)]
         public void TestAddingNegatives(String expression, Double expected)
         {
-            var result = evaluator.Calculate(expression);
+            var result = calculator.Calculate(expression);
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -64,9 +64,25 @@ namespace TheNewStringCalculator.Tests
         {
             var input = "1+2*4";
 
-            var result = evaluator.Calculate(input);
+            var result = calculator.Calculate(input);
 
             Assert.That(result, Is.EqualTo(9));
+        }
+
+        [Test]
+        public void TestOneDice()
+        {
+            var result = calculator.Calculate("1d10");
+            Assert.That(result >= 1, Is.True);
+            Assert.That(result <= 10, Is.True);
+        }
+
+        [Test]
+        public void TestTwoDice()
+        {
+            var result = calculator.Calculate("2d10");
+            Assert.That(result >= 1, Is.True);
+            Assert.That(result <= 20, Is.True);
         }
     }
 }

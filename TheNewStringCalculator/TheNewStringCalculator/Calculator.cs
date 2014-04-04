@@ -10,12 +10,25 @@ namespace TheNewStringCalculator
         public Calculator()
         {
             operators = new Dictionary<String, Func<Double, Double, Double>>();
-            operators.Add("^", (x, y) => Math.Pow(x, y));
+            operators.Add("d", RollDice);
+            operators.Add("^", Math.Pow);
             operators.Add("*", (x, y) => x * y);
             operators.Add("/", (x, y) => x / y);
             operators.Add("%", (x, y) => x % y);
             operators.Add("+", (x, y) => x + y);
             operators.Add("-", (x, y) => x - y);
+        }
+
+        private Double RollDice(Double leftOperand, Double rightOperand)
+        {
+            var random = new Random();
+            var counter = 0;
+
+            for (int i = 0; i < leftOperand; i++)
+                counter += random.Next(1, (Int32)rightOperand);
+
+            return counter;
+
         }
 
         public Double Calculate(String expression)
@@ -87,6 +100,8 @@ namespace TheNewStringCalculator
                 return "*";
             if (expression.Contains("^"))
                 return "^";
+            if (expression.Contains("d"))
+                return "d";
 
             return null;
         }
